@@ -57,11 +57,18 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   todoItem: {
-    marginBottom: 5,
     backgroundColor: '#f0f0f0',
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.96,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   todoText: {
     fontSize:14,
@@ -73,6 +80,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignSelf: 'stretch',
     marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.96,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   buttonText: {
     color: 'white',
