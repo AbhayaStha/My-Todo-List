@@ -11,7 +11,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={Home}/>
-        <Stack.Screen name="NewTodo" component={NewTodo}/>
+        <Stack.Screen name="Add New Todo" component={NewTodo}/>
       </Stack.Navigator>
     </NavigationContainer>)
 }

@@ -1,11 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from '@expo/vector-icons';
 
 export const Home = () => {
     const navigation = useNavigation();
     const gotoNewTodoHandler = () => {
       console.log("NewTodo button clicked");
-      navigation.navigate("NewTodo");
+      navigation.navigate("Add New Todo");
     };
 
   return (
@@ -27,6 +28,7 @@ export const Home = () => {
       </View>
       <View style={styles.separator}></View>
       <TouchableOpacity style={styles.addButton} onPress = {gotoNewTodoHandler}>
+        <Ionicons name = 'add-circle-outline' size={20} color='white'/>
         <Text style={styles.buttonText}>ADD NEW TODO</Text> 
       </TouchableOpacity>
     </View>
@@ -86,6 +88,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignSelf: 'stretch',
     marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -99,5 +104,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 12,
     textAlign: 'center',
+    marginLeft: 5,
   },
 });

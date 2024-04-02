@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, TextInput } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 export const NewTodo = ({ navigation }) => {
   const [title, setTitle] = useState("");
@@ -34,9 +35,11 @@ export const NewTodo = ({ navigation }) => {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Home")}>
+          <Ionicons name = 'backspace-outline' size={25} color='white'/>
           <Text style={styles.buttonText}>Cancel</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => console.log("hello")}>
+        <TouchableOpacity style={styles.button} onPress={() => console.log("Save button clicked")}>
+          <Ionicons name = 'save-outline' size={20} color='white'/>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
       </View>
@@ -67,15 +70,15 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   inputLabel: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     marginTop: 10,
     marginBottom: 5,
     alignSelf: 'flex-start',
   },
   textInput: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 15,
+    fontWeight: 'normal',
     padding: 10,
     borderRadius: 5,
     borderColor: '#ccc',
@@ -84,15 +87,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   multilineTextInput: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 15,
+    fontWeight: 'normal',
     padding: 10,
     borderRadius: 5,
     borderColor: '#ccc',
     borderWidth: 1,
     alignSelf: 'stretch',
     marginBottom: 20,
-    minHeight: 100, 
+    minHeight: 75, 
     textAlignVertical: 'top', 
   },
   buttonContainer: {
@@ -105,10 +108,14 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 5,
     marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonText: {
     color: 'white',
     fontSize: 12,
     textAlign: 'center',
+    marginLeft: 5,
   },
 });
