@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, ToastAndroid } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTodoContext } from './component/TodoContext';
+import { useTodoContext } from '../component/TodoContext';
 import colors from '../constant/color';
 
 export const NewTodo = ({ navigation }) => {

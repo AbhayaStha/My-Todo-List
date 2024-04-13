@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTodoContext } from './component/TodoContext';
+import { useTodoContext } from '../component/TodoContext';
 import colors from '../constant/color';
 
 export const Home = () => {
