@@ -1,109 +1,134 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTodoContext } from './component/TodoContext';
+import colors from '../constant/color';
 
 export const Home = () => {
     const navigation = useNavigation();
+    const { todos, markAsFinished, deleteTodo, toggleExpanded } = useTodoContext();
+
     const gotoNewTodoHandler = () => {
-      console.log("NewTodo button clicked");
-      navigation.navigate("Add New Todo");
+        navigation.navigate('Add New Todo');
     };
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.content}>
+    const renderTodoItem = ({ item, index }) => (
+        <View style={styles.todoItem}>
+            <TouchableOpacity onPress={() => toggleExpanded(index)}>
+                <Text style={styles.todoText}>
+                    {item.title}
+                    <Ionicons style= {styles.caret} name={item.expanded ? 'caret-up-outline' : 'caret-down-outline'} size={14} />
+                </Text>
+            </TouchableOpacity>
+            {item.expanded && (
+                <View style={styles.todoExpanded}>
+                    <Text style={styles.todoDescription}>{item.description}</Text>
+                    <View style={styles.controlPanel}>
+                        {!item.finished && (
+                            <TouchableOpacity onPress={() => markAsFinished(index)}>
+                                <Ionicons name='checkmark' size={20} color='green' />
+                            </TouchableOpacity>
+                        )}
+                        <TouchableOpacity onPress={() => deleteTodo(index)}>
+                            <Ionicons name='trash' size={20} color='red' />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )}
+        </View>
+    );
+
+    return (
+        <View style={styles.container}>
         <Text style={styles.title}>My Todo List</Text>
         <View style={styles.separator}></View>
-        <View style={styles.todoList}>
-            <View style={styles.todoItem}>
-            <Text style={styles.todoText}>Buy milk</Text>
-          </View>
-          <View style={styles.todoItem}>
-            <Text style={styles.todoText}>Buy bread</Text>
-          </View>
-          <View style={styles.todoItem}>
-            <Text style={styles.todoText}>Buy eggs</Text>
-          </View>
+            <FlatList
+                data={todos}
+                renderItem={renderTodoItem}
+                keyExtractor={(item, index) => index.toString()}
+            />
+            <TouchableOpacity style={styles.addButton} onPress={gotoNewTodoHandler}>
+                <Ionicons name='add-circle-outline' size={20} color='white' />
+                <Text style={styles.buttonText}>ADD NEW TODO</Text>
+            </TouchableOpacity>
         </View>
-      </View>
-      <View style={styles.separator}></View>
-      <TouchableOpacity style={styles.addButton} onPress = {gotoNewTodoHandler}>
-        <Ionicons name = 'add-circle-outline' size={20} color='white'/>
-        <Text style={styles.buttonText}>ADD NEW TODO</Text> 
-      </TouchableOpacity>
-    </View>
-  );
-}
+    );
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 20,
-  },
-  content: {
-    flex: 1,
-    alignSelf: 'stretch',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    alignSelf: 'center',
-  },
-  separator: {
-    width: '100%',
-    height: 1,
-    backgroundColor: '#000',
-    marginVertical: 10,
-  },
-  todoList: {
-    alignItems: 'stretch',
-    marginBottom: 10,
-    alignSelf: 'stretch',
-  },
-  todoItem: {
-    backgroundColor: '#f0f0f0',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
+    container: {
+        flex: 1,
+        backgroundColor: colors.backgroundPrimary,
+        // alignItems: 'center',
+        // justifyContent: 'space-between',
+        padding: 20,
     },
-    shadowOpacity: 0.96,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  todoText: {
-    fontSize:14,
-  },
-  addButton: {
-    backgroundColor: '#6D8777',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 5,
-    alignSelf: 'stretch',
-    marginBottom: 20,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
+    title: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginBottom: 10,
+      alignSelf: 'center',
     },
-    shadowOpacity: 0.96,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 12,
-    textAlign: 'center',
-    marginLeft: 5,
-  },
+    separator: {
+      width: '100%',
+      height: 1,
+      backgroundColor: colors.separator,
+      marginVertical: 10,
+    },
+    todoItem: {
+      backgroundColor: colors.backgroundSecondary,
+      padding: 10,
+      borderRadius: 5,
+      marginBottom: 10,
+      shadowColor: colors.shadowColor,
+      shadowOffset: { 
+        width: 0, 
+        height: 2 
+      },
+      // alignSelf: 'stretch',
+      // marginBottom: 20,
+      shadowOpacity: 0.96,
+      shadowRadius: 3.84,
+      elevation: 5,
+    },
+    todoText: {
+        fontSize: 14,
+        fontWeight: 'bold',
+    },
+    todoExpanded: {
+        marginTop: 10,
+    },
+    todoDescription: {
+        fontSize: 12,
+        marginBottom: 10,
+    },
+    controlPanel: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+    },
+    addButton: {
+        backgroundColor: colors.buttonPrimary,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        borderRadius: 5,
+        // alignSelf: 'stretch',
+        // marginBottom: 20,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.96,
+        shadowRadius: 3.84,
+        elevation: 5,
+      },
+    buttonText: {
+        color: colors.buttonText,
+        fontSize: 12,
+        textAlign: 'center',
+        marginLeft: 5,
+    },
 });
